@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="ru">
+    <head>
+        {% csrf_token %}
+        <script>const csrftoken = document.querySelector('[name=csrfmiddlewaretoken]').value;</script>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+        <meta name="description" content="" />
+        <meta name="author" content="" />
+        <title>{% block head_title %}{% endblock head_title %}</title>
+        {% load static %}
+        <link rel="stylesheet" type="text/css" href="{% static 'css/styles.css' %}">
+    </head>
+    <body class="body">
+        <div class="content">
+            <nav class="main-menu">
+                <ul>
+                    <li><a href="/manage"><i class="fa fa-home fa-2x"></i><span class="nav-text">Главная</span></a></li>
+                    <li><a href="/manage/keys-text"><i class="fa fa-file-text fa-2x"></i><span class="nav-text">Текстовые ключи</span></a></li>
+                    <li><a href="/manage/keys-voice"><i class="fa fa-microphone fa-2x"></i><span class="nav-text">Голосовые ключи</span></a></li>
+                    <li><a href="/manage/export"><i class="fa fa-download fa-2x"></i><span class="nav-text">Экспорт</span></a></li>
+                    <li><a href="/manage/languages"><i class="fa fa-language fa-2x"></i><span class="nav-text">Языки</span></a></li>
+                    <li><a href="/manage/languagestasks"><i class="fa fa-tasks fa-2x"></i><span class="nav-text">Фоновые задачи</span></a></li>
+                    <li><a href="/manage/logs"><i class="fa fa-list fa-2x"></i><span class="nav-text">Логи</span></a></li>
+                    <li><a href="/manage/viewcache"><i class="fa fa-table fa-2x"></i><span class="nav-text">Кэш</span></a></li>
+                </ul>
+                <ul class="logout">
+                    <li><a href="/manage/settings"><i class="fa fa-cog fa-2x"></i><span class="nav-text">Настройки</span></a></li>
+                    <li><a href="/logout"><i class="fa fa-power-off fa-2x"></i><span class="nav-text">Выход</span></a></li>
+                </ul>
+			</nav>
+
+            <div class="page-header">
+                <i class="fa {% block page-ico %}{% endblock page-ico %} fa-2x"></i>
+                <span class="header-text">{% block page-title %}{% endblock page-title %}</span>
+                {% block head-button %}{% endblock head-button %}
+                <div id="clock">
+                    <p class="date">[[ date ]]</p>
+                    <p class="time">[[ time ]]</p>
+                </div>
+            </div>
+
+            <div class="app-body">
+                {% block content %}
+                    {{ content }}
+                {% endblock content %}
+            </div>
+        </div>
+        <div id="loadbg" style="width: 100%; height: 100%; position: fixed; top: 0px; left: 0px; background-color: rgba(0, 0, 0, 0.5); display: none;">
+            <div style="width: 50px;position: fixed;top: calc(50% - 25px);left: calc(50% - 25px);"><div class="donut"></div></div>
+        </div>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.3.4/vue.min.js"></script>
+        <script src="{% static 'js/scripts-rl1cvb032l1ad7y.js' %}"></script>
+    </body>
+</html>
