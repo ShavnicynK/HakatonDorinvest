@@ -2,7 +2,6 @@
 
 ## REST API
 
-### Mетоды
 
 #### GET /api/expositions
 Возвращает все выставки
