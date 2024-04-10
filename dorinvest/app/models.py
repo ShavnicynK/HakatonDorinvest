@@ -1,11 +1,25 @@
 from django.db import models
 
 
-girl = 'G' # женский пол
-boy = 'B' # мужской пол
+girl = 'girl'
+boy = 'boy'
 GENDERS = [
-    (girl, 'G'),
-    (boy, 'B'),
+    (girl, 'girl'),
+    (boy, 'boy'),
+]
+
+cat = 'cat'
+dog = 'dog'
+TYPES_PET = [
+    (cat, 'cat'),
+    (dog, 'dog'),
+]
+
+active = 'active'
+disabled = 'disabled'
+ACTIVITIES = [
+    (active, 'active'),
+    (disabled, 'disabled'),
 ]
 
 
@@ -31,9 +45,10 @@ class Merch(models.Model):
 # животные
 class Pet(models.Model):
     name = models.CharField(max_length=300, blank=False)
-    gender = models.CharField(max_length=1, choices=GENDERS, default=boy)
+    gender = models.CharField(max_length=10, choices=GENDERS, default=boy)
     age = models.CharField(max_length=100, blank=False)
     description = models.CharField(max_length=1000, blank=False)
+    type = models.CharField(max_length=10, choices=TYPES_PET, default=cat)
 
 
 # фотографии животных
@@ -48,6 +63,9 @@ class Exposition(models.Model):
     date_start = models.DateField()
     date_finish = models.DateField()
     place = models.CharField(max_length=500, blank=False)
+    status = models.CharField(max_length=10, choices=ACTIVITIES, default=active)
+    meta_title = models.CharField(max_length=300, blank=False)
+    meta_description = models.CharField(max_length=500, blank=False)
     pets = models.ManyToManyField(Pet, through='ExpositionPet', related_name='exposition_pet')
     partners = models.ManyToManyField(Partner, through='ExpositionPartner', related_name='exposition_partner')
 
