@@ -54,18 +54,16 @@ class Pet(models.Model):
 # фотографии животных
 class ImagePet(models.Model):
     image = models.ImageField(upload_to='static/images/pets')
-    pet = models.ForeignKey(Pet, on_delete=models.CASCADE)
+    pet = models.ForeignKey(Pet, on_delete=models.CASCADE, related_name='images')
 
 
 # выставки
 class Exposition(models.Model):
-    alias = models.CharField(max_length=300, blank=False)
     date_start = models.DateField()
     date_finish = models.DateField()
-    place = models.CharField(max_length=500, blank=False)
+    top_image = models.CharField(max_length=300, blank=False, default='')
+    place = models.CharField(max_length=500, blank=False, default='')
     status = models.CharField(max_length=10, choices=ACTIVITIES, default=active)
-    meta_title = models.CharField(max_length=300, blank=False)
-    meta_description = models.CharField(max_length=500, blank=False)
     pets = models.ManyToManyField(Pet, through='ExpositionPet', related_name='exposition_pet')
     partners = models.ManyToManyField(Partner, through='ExpositionPartner', related_name='exposition_partner')
 
@@ -89,6 +87,25 @@ class ExpositionPartner(models.Model):
 class ImageExpositionImage(models.Model):
     exposition = models.ForeignKey(Exposition, on_delete=models.CASCADE)
     image = models.ForeignKey(ImageExposition, on_delete=models.CASCADE)
+
+
+class BaseSettings(models.Model):
+    full_description = models.CharField(max_length=3000, blank=True)
+    form_email = models.CharField(max_length=500, blank=True)
+    contact_email = models.CharField(max_length=500, blank=True)
+    contact_phone = models.CharField(max_length=500, blank=True)
+    contact_address = models.CharField(max_length=500, blank=True)
+    contact_telegram = models.CharField(max_length=500, blank=True)
+    contact_vkontakte = models.CharField(max_length=500, blank=True)
+    contact_odnoklassniki = models.CharField(max_length=500, blank=True)
+    statistic_pets = models.IntegerField(default=0)
+    statistic_volunteers = models.IntegerField(default=0)
+    statistic_pets_home = models.IntegerField(default=0)
+    how_get_text = models.CharField(max_length=3000, blank=True)
+    contract_file = models.FileField(upload_to='static/files', blank=True)
+    meta_title = models.CharField(max_length=300, blank=False, default='')
+    meta_description = models.CharField(max_length=500, blank=False, default='')
+    meta_keywords = models.CharField(max_length=500, blank=False, default='')
 
 
 

@@ -1,0 +1,47 @@
+{% extends 'manage/base_manage.html' %}
+{% load static %}
+{% block page-ico %}fa-question{% endblock page-ico %}
+{% block page-title %}Вопросы и ответы{% endblock page-title %}
+{% block content %}
+    <div>
+        <form class="" method="POST" action="{% url 'questions' %}">
+            {% csrf_token %}
+            <div style="overflow:hidden">
+                <fieldset class="fs-crm">
+                    <legend>Новый вопрос</legend>
+                    <div class="modal-inner-label">
+                        Сам вопрос:
+                    </div>
+                    <div class="modal-inner-input">
+                        <input type="text" id="question" name="question" value="" maxlength="255" class="inputbox" />
+                    </div>
+                    <div class="modal-inner-label">
+                        Ответ на вопрос:
+                    </div>
+                    <div class="modal-inner-input">
+                        <input type="text" id="answer" name="answer" value="" maxlength="255" class="inputbox" />
+                    </div>
+                    <br>
+                    <div class="modal-inner-input">
+                        <button class="btn" type="submit">Сохранить</button>
+                    </div>
+                </fieldset>
+            </div>
+        </form>
+    </div>
+    {% if data %}
+        <div style="margin: 0 2%">
+            <h2>Вопросы</h2>
+            {% for question in data %}
+                <div class="question-block">
+                    <div class="question-block-item"><strong>Вопрос:</strong><br>{{ question.question }}</div>
+                    <div class="question-block-item"><strong>Ответ:</strong><br>{{ question.answer }}</div>
+                    <div class="question-block-item" style="text-align: right;"><a href="/manage/questions/delete/{{ question.id }}">Удалить</a></div>
+                </div>
+            {% endfor %}
+        </div>
+    {% endif %}
+
+
+{% endblock content %}
+

@@ -1,0 +1,85 @@
+{% extends 'manage/base_manage.html' %}
+{% load static %}
+{% block page-ico %}fa-paw{% endblock page-ico %}
+{% block page-title %}Животные{% endblock page-title %}
+{% block content %}
+    <div>
+        <form class="" method="POST" action="{% url 'pets' %}" enctype="multipart/form-data">
+            {% csrf_token %}
+            <h2>Добавить животное</h2>
+            <div style="overflow:hidden">
+                <fieldset class="fs-crm">
+
+                    <div class="modal-inner-label">
+                        Вид животного:
+                    </div>
+                    <div class="modal-inner-input">
+                        <select id="type" name="type" size="1">
+                            <option value="none">Выберите</option>
+                            <option value="boy">Собака</option>
+                            <option value="girl">Кошка</option>
+                        </select>
+                    </div>
+                    <div class="modal-inner-label">
+                        Кличка:
+                    </div>
+                    <div class="modal-inner-input">
+                        <input type="text" id="name" name="name" value="" maxlength="255" class="inputbox" />
+                    </div>
+                    <div class="modal-inner-label">
+                        Пол животного:
+                    </div>
+                    <div class="modal-inner-input">
+                        <select id="gender" name="gender" size="1">
+                            <option value="none">Выберите</option>
+                            <option value="boy">Мальчик</option>
+                            <option value="girl">Девочка</option>
+                        </select>
+                    </div>
+                    <div class="modal-inner-label">
+                        Возраст:
+                    </div>
+                    <div class="modal-inner-input">
+                        <input type="text" id="age" name="age" value="" maxlength="255" class="inputbox" />
+                    </div>
+                </fieldset>
+                <fieldset class="fs-crm">
+
+                    <div class="modal-inner-label">
+                        Описание:
+                    </div>
+                    <div class="modal-inner-input">
+                        <textarea class="text_area" name="description" id="description" style="width: 100%;height:100px;"></textarea>
+                    </div>
+                    <div class="modal-inner-label">
+                        Фотографии:
+                    </div>
+                    <div class="modal-inner-input">
+                        <input type="file" id="images" name="images" accept="image/png, image/jpeg" multiple />
+                    </div>
+                    <br>
+                    <div class="modal-inner-input">
+                         <button class="btn" type="submit">Сохранить</button>
+                    </div>
+                </fieldset>
+            </div>
+        </form>
+    </div>
+    {% if data %}
+        <div style="margin: 0 2%">
+            <h2>Животные</h2>
+            {% for pet in data %}
+                <div class="pet-block">
+                    <div class="pet-block-item image" style="background-image: url(/{{ pet.image }})"></div>
+                    <div class="pet-block-item">{{ pet.name }}, {{ pet.age }}</div>
+                    <div class="pet-block-item"><a href="/manage/pets/delete/{{ pet.id }}">Удалить</a></div>
+                </div>
+            {% endfor %}
+        </div>
+    {% else %}
+
+    {% endif %}
+
+
+{% endblock content %}
+

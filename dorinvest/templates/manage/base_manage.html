@@ -5,24 +5,22 @@
         <script>const csrftoken = document.querySelector('[name=csrfmiddlewaretoken]').value;</script>
         <meta charset="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+        {% load static %}
+        <link href="{% static '/favicon.ico' %}" rel="shortcut icon" type="image/vnd.microsoft.icon">
         <meta name="description" content="" />
         <meta name="author" content="" />
         <title>{% block head_title %}{% endblock head_title %}</title>
-        {% load static %}
         <link rel="stylesheet" type="text/css" href="{% static 'css/styles.css' %}">
     </head>
     <body class="body">
         <div class="content">
             <nav class="main-menu">
                 <ul>
-                    <li><a href="/manage"><i class="fa fa-home fa-2x"></i><span class="nav-text">Главная</span></a></li>
-                    <li><a href="/manage/keys-text"><i class="fa fa-file-text fa-2x"></i><span class="nav-text">Текстовые ключи</span></a></li>
-                    <li><a href="/manage/keys-voice"><i class="fa fa-microphone fa-2x"></i><span class="nav-text">Голосовые ключи</span></a></li>
-                    <li><a href="/manage/export"><i class="fa fa-download fa-2x"></i><span class="nav-text">Экспорт</span></a></li>
-                    <li><a href="/manage/languages"><i class="fa fa-language fa-2x"></i><span class="nav-text">Языки</span></a></li>
-                    <li><a href="/manage/languagestasks"><i class="fa fa-tasks fa-2x"></i><span class="nav-text">Фоновые задачи</span></a></li>
-                    <li><a href="/manage/logs"><i class="fa fa-list fa-2x"></i><span class="nav-text">Логи</span></a></li>
-                    <li><a href="/manage/viewcache"><i class="fa fa-table fa-2x"></i><span class="nav-text">Кэш</span></a></li>
+                    <li><a href="/manage"><i class="fa fa-home fa-2x"></i><span class="nav-text">Панель управления</span></a></li>
+                    <li><a href="/manage/expositions"><i class="fa fa-calendar fa-2x"></i><span class="nav-text">Выставки</span></a></li>
+                    <li><a href="/manage/pets"><i class="fa fa-paw fa-2x"></i><span class="nav-text">Животные</span></a></li>
+                    <li><a href="/manage/questions"><i class="fa fa-question fa-2x"></i><span class="nav-text">Вопросы и ответы</span></a></li>
+                    <li><a href="/manage/partners"><i class="fa fa-users fa-2x"></i><span class="nav-text">Партнеры</span></a></li>
                 </ul>
                 <ul class="logout">
                     <li><a href="/manage/settings"><i class="fa fa-cog fa-2x"></i><span class="nav-text">Настройки</span></a></li>

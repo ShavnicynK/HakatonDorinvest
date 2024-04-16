@@ -1,0 +1,141 @@
+{% extends 'manage/base_manage.html' %}
+{% load static %}
+{% block page-ico %}fa-cog{% endblock page-ico %}
+{% block page-title %}Настройки{% endblock page-title %}
+{% block content %}
+<h1>Базовые настройки</h1>
+{% if data %}
+    <div >
+        <form class="" method="POST" action="{% url 'settings' %}"  enctype="multipart/form-data">
+            {% csrf_token %}
+            <div style="overflow:hidden">
+                <fieldset class="fs-crm">
+                    <legend>Метатеги</legend>
+                    <div class="modal-inner-label">
+                        Title:
+                    </div>
+                    <div class="modal-inner-input">
+                        <textarea class="text_area" name="meta_title" id="meta_title" style="width: 100%;height:50px;">{{ data.meta_title }}</textarea>
+                    </div>
+                    <div class="modal-inner-label">
+                        Description:
+                    </div>
+                    <div class="modal-inner-input">
+                        <textarea class="text_area" name="meta_description" id="meta_description" style="width: 100%;height:50px;">{{ data.meta_description }}</textarea>
+                    </div>
+                    <div class="modal-inner-label">
+                        Keywords:
+                    </div>
+                    <div class="modal-inner-input">
+                        <textarea class="text_area" name="meta_keywords" id="meta_keywords" style="width: 100%;height:50px;">{{ data.meta_keywords }}</textarea>
+                    </div>
+                </fieldset>
+                <fieldset class="fs-crm">
+                    <legend>Блок "О выставке"</legend>
+                    <div class="modal-inner-label">
+                        Текст:
+                    </div>
+                    <div class="modal-inner-input">
+                        <textarea class="text_area" name="full_description" id="full_description" style="width: 100%;height:200px;">{{ data.full_description }}</textarea>
+                    </div>
+                </fieldset>
+                <fieldset class="fs-crm">
+                    <legend>Блок "Как взять питомца"</legend>
+                    <div class="modal-inner-label">
+                        Текст:
+                    </div>
+                    <div class="modal-inner-input">
+                        <textarea class="text_area" name="how_get_text" id="how_get_text" style="width: 100%;height:150px;">{{ data.how_get_text }}</textarea>
+                    </div>
+                    <div class="modal-inner-label">
+                        Файл договора:
+                    </div>
+                    {% if data.contract_file != '' %}
+                        <a href="{{ data.contract_file }}" target="_blank">посмотреть файл</a><br>
+                    {% endif %}
+                    <div class="modal-inner-input">
+                        <input type="file" id="contract_file" name="contract_file" accept=".doc, .docx, .pdf" />
+                    </div>
+                </fieldset>
+                <fieldset class="fs-crm">
+                    <legend>Контакты</legend>
+                    <div class="modal-inner-label">
+                        Электронная почта для форм:
+                    </div>
+                    <div class="modal-inner-input">
+                        <input type="text" id="form_email" name="form_email" value="{{ data.form_email }}" maxlength="255" class="inputbox">
+                    </div>
+                    <div class="modal-inner-label">
+                        Электронная почта в контактах:
+                    </div>
+                    <div class="modal-inner-input">
+                        <input type="text" id="contact_email" name="contact_email" value="{{ data.contact_email }}" maxlength="255" class="inputbox">
+                    </div>
+                    <div class="modal-inner-label">
+                        Телефон в контактах:
+                    </div>
+                    <div class="modal-inner-input">
+                        <input type="text" id="contact_phone" name="contact_phone" value="{{ data.contact_phone }}" maxlength="255" class="inputbox">
+                    </div>
+                    <div class="modal-inner-label">
+                        Адрес в контактах:
+                    </div>
+                    <div class="modal-inner-input">
+                        <textarea class="text_area" name="contact_address" id="contact_address" style="width: 100%;height:100px;">{{ data.contact_address }}</textarea>
+                    </div>
+                </fieldset>
+                <fieldset class="fs-crm">
+                    <legend>Соцсети</legend>
+                    <div class="modal-inner-label">
+                        Ссылка на Телеграм:
+                    </div>
+                    <div class="modal-inner-input">
+                        <input type="text" id="contact_telegram" name="contact_telegram" value="{{ data.contact_telegram }}" maxlength="255" class="inputbox">
+                    </div>
+                    <div class="modal-inner-label">
+                        Ссылка на Вконтакте:
+                    </div>
+                    <div class="modal-inner-input">
+                        <input type="text" id="contact_vkontakte" name="contact_vkontakte" value="{{ data.contact_vkontakte }}" maxlength="255" class="inputbox">
+                    </div>
+                    <div class="modal-inner-label">
+                        Ссылка на Одноклассники:
+                    </div>
+                    <div class="modal-inner-input">
+                        <input type="text" id="contact_odnoklassniki" name="contact_odnoklassniki" value="{{ data.contact_odnoklassniki }}" maxlength="255" class="inputbox">
+                    </div>
+                </fieldset>
+                <fieldset class="fs-crm">
+                    <legend>Статистика всех выставок</legend>
+                    <div class="modal-inner-label">
+                        Сколько животных участвовало:
+                    </div>
+                    <div class="modal-inner-input">
+                        <input type="text" id="statistic_pets" name="statistic_pets" value="{{ data.statistic_pets }}" maxlength="255" class="inputbox">
+                    </div>
+                    <div class="modal-inner-label">
+                        Сколько волонтеров помогало:
+                    </div>
+                    <div class="modal-inner-input">
+                        <input type="text" id="statistic_volunteers" name="statistic_volunteers" value="{{ data.statistic_volunteers }}" maxlength="255" class="inputbox">
+                    </div>
+                    <div class="modal-inner-label">
+                        Сколько животных пристроили:
+                    </div>
+                    <div class="modal-inner-input">
+                        <input type="text" id="statistic_pets_home" name="statistic_pets_home" value="{{ data.statistic_pets_home }}" maxlength="255" class="inputbox">
+                    </div>
+                </fieldset>
+            </div>
+            <input type="hidden" name="setting_id" value="{{ data.setting_id }}">
+            <div style="margin: 0 2%">
+                <button class="btn" type="submit">Сохранить</button>
+            </div>
+
+        </form>
+    </div>
+{% endif %}
+
+
+{% endblock content %}
+
