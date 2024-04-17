@@ -296,8 +296,8 @@ https://vistavki.srv9.ru/api/form/call
 Тело запроса:
 ```json
 {
-	"name": "name",
-	"phone": "phone"
+    "name": "name",
+    "phone": "phone"
 }
 ```
 
@@ -320,10 +320,10 @@ https://vistavki.srv9.ru/api/form/feedback
 Тело запроса:
 ```json
 {
-  "name": "name",
-  "phone": "phone", 
-  "email": "email",
-  "message": "message"
+    "name": "name",
+    "phone": "phone", 
+    "email": "email",
+    "message": "message"
 }
 ```
 
@@ -346,8 +346,8 @@ https://vistavki.srv9.ru/api/form/pickuppet
 Тело запроса:
 ```json
 {
-	"name": "name",
-	"phone": "phone",
+    "name": "name",
+    "phone": "phone",
     "pet": "pet"
 }
 ```
