@@ -320,10 +320,10 @@ https://vistavki.srv9.ru/api/form/feedback
 Тело запроса:
 ```json
 {
-	"name": "name",
-	"phone": "phone",
-    "email": "email",
-	"message": "message"
+  "name": "name",
+  "phone": "phone", 
+  "email": "email",
+  "message": "message"
 }
 ```
 
