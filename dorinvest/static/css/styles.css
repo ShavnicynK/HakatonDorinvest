@@ -346,7 +346,8 @@ fieldset legend {
 }
 
 .exposition-add input[type="checkbox"][id^="partner"],
-.exposition-add input[type="checkbox"][id^="pet"] {
+.exposition-add input[type="checkbox"][id^="pet"],
+.exposition-add input[type="radio"][id^="topimg"] {
   display: none;
 }
 

@@ -1,0 +1,60 @@
+{% extends 'manage/base_manage.html' %}
+{% load static %}
+{% block page-ico %}fa-calendar{% endblock page-ico %}
+{% block page-title %}Выставки{% endblock page-title %}
+{% block content %}
+<a href="/manage/exposition_edit/0" style="float: right;" class="reload-button">Добавить выставку</a>
+    {% if data %}
+        <table class="crm-table">
+            <thead>
+                <tr>
+                    <th>Состояние</th>
+                    <th>Даты проведения</th>
+                    <th>Место проведения</th>
+                    <th>Количество животных</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody id="tasklisttable">
+        {% for exposition in data %}
+            {% if exposition.status == 'active' %}
+            <tr>
+                <td>Активная</td>
+                <td>{{ exposition.date_start|date:'d' }} - {{ exposition.date_finish|date:'d /m/Y' }}</td>
+                <td>{{ exposition.place }}</td>
+                <td>
+                    Кошки: {{ exposition.cats }}<br>
+                    Собаки: {{ exposition.dogs }}
+                </td>
+                <td>
+                    <a href="/manage/exposition_edit/{{ exposition.id }}" style="float: right;" class="reload-button">Редактировать</a><br>
+                    <a href="/manage/exposition_close/{{ exposition.id }}" style="float: right;" class="reload-button">Завершить</a>
+                </td>
+            </tr>
+            {% endif %}
+            {% if exposition.status != 'active' %}
+            <tr>
+                <td>Завершена {% if exposition.status == 'completed' %}(отображается){% endif %}</td>
+                <td>{{ exposition.date_start|date:'d' }} - {{ exposition.date_finish|date:'d-m-Y' }}</td>
+                <td>{{ exposition.place }}</td>
+                <td>
+                    Кошки: {{ exposition.cats }}<br>
+                    Собаки: {{ exposition.dogs }}
+                </td>
+                <td>
+                    <a href="/manage/exposition_view/{{ exposition.id }}" style="float: right;" class="reload-button">Просмотр</a><br>
+                </td>
+            </tr>
+            {% endif %}
+
+        {% endfor %}
+            </tbody>
+            </table>
+    {% else %}
+
+    {% endif %}
+
+
+
+{% endblock content %}
+

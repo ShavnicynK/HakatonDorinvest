@@ -1,0 +1,38 @@
+{% extends 'manage/base_manage.html' %}
+{% load static %}
+{% block page-ico %}fa-calendar{% endblock page-ico %}
+{% block page-title %}Выставка - завершение{% endblock page-title %}
+{% block content %}
+
+    <div >
+        <form class="" method="POST" action=""  enctype="multipart/form-data">
+            {% csrf_token %}
+            <div style="overflow:hidden">
+                <fieldset class="fs-crm">
+
+                    <div class="modal-inner-label">
+                        Описание выставки:
+                    </div>
+                    <div class="modal-inner-input">
+                        <textarea class="text_area" name="description" id="description" style="width: 100%;height:100px;"></textarea>
+                    </div>
+                    <div class="modal-inner-label">
+                        Фотографии:
+                    </div>
+                    <div class="modal-inner-input">
+                        <input type="file" id="images" name="images" accept="image/png, image/jpeg" multiple />
+                    </div>
+                    <br>
+                    <div class="modal-inner-input">
+                         <button class="btn" type="submit">Сохранить</button>
+                    </div>
+                </fieldset>
+            </div>
+
+        </form>
+    </div>
+
+
+
+{% endblock content %}
+

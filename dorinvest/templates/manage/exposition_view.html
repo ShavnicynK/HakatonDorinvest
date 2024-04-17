@@ -1,0 +1,42 @@
+{% extends 'manage/base_manage.html' %}
+{% load static %}
+{% block page-ico %}fa-calendar{% endblock page-ico %}
+{% block page-title %}Выставка{% endblock page-title %}
+{% block content %}
+
+    {% if data %}
+        <h3>Общая информация</h3>
+        <p>Место проведения: {{ data.place }}</p>
+        <p>Дата начала: {{ data.date_start|date:'d-m-Y' }}</p>
+        <p>Дата окончания: {{ data.date_finish|date:'d-m-Y' }}</p>
+        <h3>Описание как проходило</h3>
+        <div>
+            {{ data.description }}
+        </div>
+        <h3>Животные</h3>
+        <div style="margin: 0 2%; width: 100%; overflow: auto;">
+            {% for pet in data.pets.all %}
+                <div class="pet-block">
+                    <div class="pet-block-item image" style="background-image: url(/{{ pet.images.all.0.image }})"></div>
+                    <div class="pet-block-item">{{ pet.name }}, {{ pet.age }}</div>
+                </div>
+            {% endfor %}
+        </div>
+        <h3>Фото с выставки</h3>
+        <div style="margin: 0 2%; width: 100%; overflow: auto;">
+            {% for image in images %}
+                <div class="pet-block">
+                    <div class="pet-block-item image" style="background-image: url(/{{ image.image }})"></div>
+                </div>
+            {% endfor %}
+        </div>
+
+
+    {% else %}
+
+    {% endif %}
+
+
+
+{% endblock content %}
+

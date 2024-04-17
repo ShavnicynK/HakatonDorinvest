@@ -16,10 +16,10 @@ TYPES_PET = [
 ]
 
 active = 'active'
-disabled = 'disabled'
+past = 'past'
 ACTIVITIES = [
     (active, 'active'),
-    (disabled, 'disabled'),
+    (past, 'past'),
 ]
 
 
@@ -34,12 +34,6 @@ class Partner(models.Model):
 class Question(models.Model):
     question = models.CharField(max_length=2000, blank=False)
     answer = models.CharField(max_length=2000, blank=False)
-
-
-# мерч мероприятия
-class Merch(models.Model):
-    label = models.CharField(max_length=300, blank=False)
-    image = models.ImageField(upload_to='static/images/merch')
 
 
 # животные
@@ -66,6 +60,7 @@ class Exposition(models.Model):
     status = models.CharField(max_length=10, choices=ACTIVITIES, default=active)
     pets = models.ManyToManyField(Pet, through='ExpositionPet', related_name='exposition_pet')
     partners = models.ManyToManyField(Partner, through='ExpositionPartner', related_name='exposition_partner')
+    description = models.CharField(max_length=3000, blank=True)
 
 
 # фотографии выставки
@@ -108,4 +103,20 @@ class BaseSettings(models.Model):
     meta_keywords = models.CharField(max_length=500, blank=False, default='')
 
 
+class CallForm(models.Model):
+    name = models.CharField(max_length=500)
+    phone = models.CharField(max_length=500)
+
+
+class FeedBackForm(models.Model):
+    name = models.CharField(max_length=500)
+    phone = models.CharField(max_length=500)
+    email = models.CharField(max_length=500)
+    message = models.CharField(max_length=1500)
+
+
+class PickUpPetForm(models.Model):
+    pet = models.IntegerField(default=0)
+    name = models.CharField(max_length=500)
+    email = models.CharField(max_length=500)
 
