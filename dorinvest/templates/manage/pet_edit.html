@@ -1,12 +1,12 @@
 {% extends 'manage/base_manage.html' %}
 {% load static %}
 {% block page-ico %}fa-paw{% endblock page-ico %}
-{% block page-title %}Животные{% endblock page-title %}
+{% block page-title %}Редактирование животного{% endblock page-title %}
 {% block content %}
-    <div>
-        <form class="" method="POST" action="{% url 'pets' %}" enctype="multipart/form-data">
+<div>
+        <form class="" method="POST" action="" enctype="multipart/form-data">
             {% csrf_token %}
-            <h2>Добавить животное</h2>
+            <h2>Внести изменения:</h2>
             <div style="overflow:hidden">
                 <fieldset class="fs-crm">
 
@@ -15,32 +15,30 @@
                     </div>
                     <div class="modal-inner-input">
                         <select class="inputbox" id="type" name="type" size="1" required="">
-                            <option selected disabled value="">Выберите</option>
-                            <option value="dog">Собака</option>
-                            <option value="cat">Кошка</option>
+                            <option {% if data.type == 'dog' %} selected {% endif %} value="dog">Собака</option>
+                            <option {% if data.type == 'cat' %} selected {% endif %} value="cat">Кошка</option>
                         </select>
                     </div>
                     <div class="modal-inner-label">
                         Кличка:
                     </div>
                     <div class="modal-inner-input">
-                        <input type="text" id="name" name="name" value="" maxlength="255" class="inputbox" required=""/>
+                        <input type="text" id="name" name="name" value="{{ data.name }}" maxlength="255" class="inputbox" required=""/>
                     </div>
                     <div class="modal-inner-label">
                         Пол животного:
                     </div>
                     <div class="modal-inner-input">
                         <select class="inputbox" id="gender" name="gender" size="1" required="">
-                            <option selected disabled value="">Выберите</option>
-                            <option value="boy">Мальчик</option>
-                            <option value="girl">Девочка</option>
+                            <option {% if data.gender == 'boy' %} selected {% endif %} value="boy">Мальчик</option>
+                            <option {% if data.gender == 'girl' %} selected {% endif %} value="girl">Девочка</option>
                         </select>
                     </div>
                     <div class="modal-inner-label">
                         Возраст:
                     </div>
                     <div class="modal-inner-input">
-                        <input type="text" id="age" name="age" value="" maxlength="255" class="inputbox" required="" />
+                        <input type="text" id="age" name="age" value="{{ data.age }}" maxlength="255" class="inputbox" required="" />
                     </div>
                 </fieldset>
                 <fieldset class="fs-crm">
@@ -49,16 +47,17 @@
                         Описание:
                     </div>
                     <div class="modal-inner-input">
-                        <textarea class="inputbox" name="description" id="description" style="width: 100%;height:100px;" required=""></textarea>
+                        <textarea class="inputbox" name="description" id="description" style="width: 100%;height:100px;" required="">{{ data.description }}</textarea>
                     </div>
                     <div class="modal-inner-label">
                         Фотографии:
                     </div>
                     <div class="modal-inner-input">
-                        <input  class="inputbox" type="file" id="images" name="images" accept="image/png, image/jpeg" multiple required=""/>
+                        <input  class="inputbox" type="file" id="images" name="images" accept="image/png, image/jpeg" multiple/>
                     </div>
                     <br>
                     <div class="modal-inner-input">
+                         <input type="hidden" name="pk" value="{{ data.id }}"/>
                          <button class="buttonbox" type="submit">Сохранить</button>
                     </div>
                 </fieldset>
@@ -66,22 +65,22 @@
         </form>
     </div>
     {% if data %}
-        <div style="margin: 0 2%">
-            <h2>Животные</h2>
-            {% for pet in data %}
+
+        <div style="margin: 0 2%; width: 100%; overflow: auto;">
+            <h3>Фото животного</h3>
+            {% for image in images %}
                 <div class="pet-block">
-                    <div class="pet-block-item image" style="background-image: url(/{{ pet.image }})"></div>
-                    <div class="pet-block-item">{{ pet.name }}, {{ pet.age }}</div>
-                    <a href="/manage/pets/edit/{{ pet.id }}"
-                       style="float: right;position: absolute;right: 0;bottom: 20px;" class="button-icon"><i class="fa fa-ex fa-pencil-square-o" aria-hidden="true"></i>
-</a>
-                    <div class="pet-block-item"><a href="/manage/pets/delete/{{ pet.id }}">Удалить</a></div>
+                    <div class="pet-block-item image" style="background-image: url(/{{ image.image }})"></div>
+                    <div class="pet-block-item"><a href="/manage/pets/edit/{{ data.id }}/image/delete/{{ image.id }}">Удалить</a></div>
                 </div>
             {% endfor %}
         </div>
+
+
     {% else %}
 
     {% endif %}
+
 
 
 {% endblock content %}

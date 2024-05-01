@@ -3,7 +3,7 @@
 {% block page-ico %}fa-calendar{% endblock page-ico %}
 {% block page-title %}Выставка - редактирование{% endblock page-title %}
 {% block content %}
-{% if may == 1 %}
+
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js" integrity="sha384-BBtl+eGJRgqQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+" crossorigin="anonymous"></script>
@@ -30,7 +30,7 @@ jQuery(document).ready ( function(){
 });
 </script>
 {% if data %}
-    <div >
+    <div class="exposition-edit">
         <form class="" method="POST" action=""  enctype="multipart/form-data">
             {% csrf_token %}
             <div style="overflow:hidden">
@@ -40,24 +40,24 @@ jQuery(document).ready ( function(){
                         Место проведения:
                     </div>
                     <div class="modal-inner-input">
-                        <input type="text" id="place" name="place" value="{{ data.exposition.place }}" maxlength="255" class="inputbox" />
+                        <input type="text" id="place" name="place" value="{{ data.exposition.place }}" maxlength="255" class="inputbox" required="" />
                     </div>
                     <div class="modal-inner-label">
                         Дата начала:
                     </div>
                     <div class="modal-inner-input">
-                        <input type="text"
+                        <input type="text" class="inputbox" required=""
                                readonly="readonly"
                                style="cursor:pointer;"
                                id="date_start"
                                name="date_start"
-                               value="{{ data.exposition.date_start|date:'Y-m-d' }}">
+                               value="{% if data.exposition %}{{ data.exposition.date_start|date:'Y-m-d' }}{% endif %}">
                     </div>
                     <div class="modal-inner-label">
                         Дата завершения:
                     </div>
                     <div class="modal-inner-input">
-                        <input type="text"
+                        <input type="text" class="inputbox" required=""
                                readonly="readonly"
                                style="cursor:pointer;"
                                id="date_finish"
@@ -65,7 +65,7 @@ jQuery(document).ready ( function(){
                                value="{{ data.exposition.date_finish|date:'Y-m-d' }}">
                     </div>
                 </fieldset>
-                <fieldset class="fs-crm" style="max-height: 350px; overflow: auto;">
+                <fieldset class="fs-crm" style="overflow: auto;">
                     <legend>Фото на первом экране</legend>
                     <div class="exposition-add modal-inner-input">
                         <ul>
@@ -128,7 +128,7 @@ jQuery(document).ready ( function(){
                         </ul>
                     </div>
                 </fieldset>
-                <fieldset class="fs-crm" style="max-height: 350px; overflow: auto;">
+                <fieldset class="fs-crm" style="overflow: auto;">
                     <legend>Партнеры</legend>
                     <div class="exposition-add modal-inner-input">
                         <ul>
@@ -166,7 +166,7 @@ jQuery(document).ready ( function(){
                                            {% endif %}
                                        {% endfor %}
                                 />
-                                <label for="pet{{ pet.id }}">
+                                <label class="pet-item" for="pet{{ pet.id }}">
                                     <div class="pet-block-item image" style="background-image: url(/{{ pet.image }})"></div>
                                     <div class="pet-block-item">{{ pet.name }}</div>
                                 </label>
@@ -178,18 +178,33 @@ jQuery(document).ready ( function(){
             </div>
 
             <div style="margin: 0 2%">
-                <button class="btn" type="submit">Сохранить</button>
+                <button class="buttonbox" type="submit">Сохранить</button>
             </div>
 
         </form>
     </div>
 {% endif %}
 
-{% else %}
+<script>
 
-<h2>У вас еще есть активная выставка. Сначала завершите ее.</h2>
+const form = document.getElementsByTagName("form")[0];
 
-{% endif %}
+form.addEventListener("submit", function (event) {
+  if(!document.querySelector('input[type="radio"][name="top_image"]:checked')) {
+    alert('Выберите фото на первом экране');
+    event.preventDefault();
+  }
+  if(!document.querySelector('input[type="checkbox"][name="partners"]:checked')) {
+    alert('Выберите хотя бы одного партнера');
+    event.preventDefault();
+  }
+  if(!document.querySelector('input[type="checkbox"][name="pets"]:checked')) {
+    alert('Выберите животных');
+    event.preventDefault();
+  }
+});
+</script>
+
 
 {% endblock content %}
 

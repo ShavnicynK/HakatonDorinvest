@@ -5,16 +5,48 @@
 {% block content %}
 
     {% if data %}
-        <h3>Общая информация</h3>
-        <p>Место проведения: {{ data.place }}</p>
-        <p>Дата начала: {{ data.date_start|date:'d-m-Y' }}</p>
-        <p>Дата окончания: {{ data.date_finish|date:'d-m-Y' }}</p>
-        <h3>Описание как проходило</h3>
-        <div>
-            {{ data.description }}
-        </div>
-        <h3>Животные</h3>
+        <div >
+        <form class="" method="POST" action=""  enctype="multipart/form-data">
+            {% csrf_token %}
+            <div style="overflow:hidden">
+                <fieldset class="fs-crm">
+                    <legend>Общая информация</legend>
+                    <div class="modal-inner-label">
+                        Место проведения: {{ data.place }}
+                    </div>
+                    <div class="modal-inner-label">
+                        Дата начала: {{ data.date_start|date:'d-m-Y' }}
+                    </div>
+                    <div class="modal-inner-label">
+                        Дата начала: {{ data.date_finish|date:'d-m-Y' }}
+                    </div>
+                </fieldset>
+                <fieldset class="fs-crm">
+                    <legend>Можно поправить</legend>
+                    <div class="modal-inner-label">
+                        Описание выставки:
+                    </div>
+                    <div class="modal-inner-input">
+                        <textarea class="inputbox" name="description" id="description" style="width: 100%;height:100px;">{{ data.description }}</textarea>
+                    </div>
+                    <div class="modal-inner-label">
+                        Фотографии:
+                    </div>
+                    <div class="modal-inner-input">
+                        <input type="file" id="images" class="inputbox" name="images" accept="image/png, image/jpeg" multiple />
+                    </div>
+                    <br>
+                    <div class="modal-inner-input">
+                         <button class="buttonbox" type="submit">Сохранить</button>
+                    </div>
+                </fieldset>
+            </div>
+
+        </form>
+    </div>
+
         <div style="margin: 0 2%; width: 100%; overflow: auto;">
+            <h3>Животные</h3>
             {% for pet in data.pets.all %}
                 <div class="pet-block">
                     <div class="pet-block-item image" style="background-image: url(/{{ pet.images.all.0.image }})"></div>
@@ -22,11 +54,13 @@
                 </div>
             {% endfor %}
         </div>
-        <h3>Фото с выставки</h3>
+
         <div style="margin: 0 2%; width: 100%; overflow: auto;">
+            <h3>Фото с выставки</h3>
             {% for image in images %}
                 <div class="pet-block">
                     <div class="pet-block-item image" style="background-image: url(/{{ image.image }})"></div>
+                    <div class="pet-block-item"><a href="/manage/exposition/{{ data.id }}/image/delete/{{ image.id }}">Удалить</a></div>
                 </div>
             {% endfor %}
         </div>

@@ -1,4 +1,5 @@
 from django.db import models
+from django_resized import ResizedImageField
 
 
 girl = 'girl'
@@ -20,6 +21,13 @@ past = 'past'
 ACTIVITIES = [
     (active, 'active'),
     (past, 'past'),
+]
+
+new = 'new'
+done = 'done'
+STATUSES = [
+    (new, 'new'),
+    (done, 'done'),
 ]
 
 
@@ -47,7 +55,7 @@ class Pet(models.Model):
 
 # фотографии животных
 class ImagePet(models.Model):
-    image = models.ImageField(upload_to='static/images/pets')
+    image = ResizedImageField(size=[900, None], quality=100, upload_to='static/images/pets')
     pet = models.ForeignKey(Pet, on_delete=models.CASCADE, related_name='images')
 
 
@@ -65,7 +73,7 @@ class Exposition(models.Model):
 
 # фотографии выставки
 class ImageExposition(models.Model):
-    image = models.ImageField(upload_to='static/images/expositions')
+    image = ResizedImageField(size=[900, None], quality=100, upload_to='static/images/expositions')
     exposition = models.ForeignKey(Exposition, on_delete=models.CASCADE)
 
 
@@ -106,6 +114,7 @@ class BaseSettings(models.Model):
 class CallForm(models.Model):
     name = models.CharField(max_length=500)
     phone = models.CharField(max_length=500)
+    status = models.CharField(max_length=10, choices=STATUSES, default=new)
 
 
 class FeedBackForm(models.Model):
@@ -113,10 +122,12 @@ class FeedBackForm(models.Model):
     phone = models.CharField(max_length=500)
     email = models.CharField(max_length=500)
     message = models.CharField(max_length=1500)
+    status = models.CharField(max_length=10, choices=STATUSES, default=new)
 
 
 class PickUpPetForm(models.Model):
     pet = models.IntegerField(default=0)
     name = models.CharField(max_length=500)
     email = models.CharField(max_length=500)
+    status = models.CharField(max_length=10, choices=STATUSES, default=new)
 

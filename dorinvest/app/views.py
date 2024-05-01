@@ -39,6 +39,7 @@ def get_start(request):
         settings_dict['exposition_id'] = exposition.id
         settings_dict['status'] = exposition.status
         settings_dict['place'] = exposition.place
+        settings_dict['top_image'] = exposition.top_image
         settings_dict['date_start'] = exposition.date_start
         settings_dict['date_finish'] = exposition.date_finish
 
@@ -260,7 +261,7 @@ def save_feedbackform(request):
     message = request.data.get('message')
 
     try:
-        CallForm.objects.create(name=name, phone=phone, email=email, message=message)
+        FeedBackForm.objects.create(name=name, phone=phone, email=email, message=message)
     except IntegrityError:
         return Response({"state": "error", "message": "error add"})
     else:
@@ -272,10 +273,10 @@ def save_pickuppetform(request):
 
     name = request.data.get('name')
     phone = request.data.get('phone')
-    pet = request.data.get('email')
+    pet = request.data.get('pet')
 
     try:
-        CallForm.objects.create(name=name, phone=phone, pet=pet)
+        PickUpPetForm.objects.create(name=name, email=phone, pet=pet)
     except IntegrityError:
         return Response({"state": "error", "message": "error add"})
     else:

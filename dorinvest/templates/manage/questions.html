@@ -13,17 +13,19 @@
                         Сам вопрос:
                     </div>
                     <div class="modal-inner-input">
-                        <input type="text" id="question" name="question" value="" maxlength="255" class="inputbox" />
+                        <textarea class="inputbox" name="question" id="question" style="width: 100%;height:100px;"></textarea>
+
                     </div>
                     <div class="modal-inner-label">
                         Ответ на вопрос:
                     </div>
                     <div class="modal-inner-input">
-                        <input type="text" id="answer" name="answer" value="" maxlength="255" class="inputbox" />
+                        <textarea class="inputbox" name="answer" id="answer" style="width: 100%;height:100px;"></textarea>
+
                     </div>
                     <br>
                     <div class="modal-inner-input">
-                        <button class="btn" type="submit">Сохранить</button>
+                        <button class="buttonbox" type="submit">Сохранить</button>
                     </div>
                 </fieldset>
             </div>
@@ -34,9 +36,9 @@
             <h2>Вопросы</h2>
             {% for question in data %}
                 <div class="question-block">
-                    <div class="question-block-item"><strong>Вопрос:</strong><br>{{ question.question }}</div>
-                    <div class="question-block-item"><strong>Ответ:</strong><br>{{ question.answer }}</div>
-                    <div class="question-block-item" style="text-align: right;"><a href="/manage/questions/delete/{{ question.id }}">Удалить</a></div>
+                    <div class="question-block-item"><strong>Вопрос:</strong><br><br>{{ question.question }}</div>
+                    <div class="question-block-item"><strong>Ответ:</strong><br><br>{{ question.answer }}</div>
+                    <div class="question-block-item" style="text-align: right;"><a  class="button-delete" href="/manage/questions/delete/{{ question.id }}">Удалить</a></div>
                 </div>
             {% endfor %}
         </div>

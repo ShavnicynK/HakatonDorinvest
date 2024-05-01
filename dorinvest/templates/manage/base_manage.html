@@ -9,12 +9,13 @@
         <link href="{% static '/favicon.ico' %}" rel="shortcut icon" type="image/vnd.microsoft.icon">
         <meta name="description" content="" />
         <meta name="author" content="" />
-        <title>{% block head_title %}{% endblock head_title %}</title>
+        <title>{% block head_title %}Панель управления{% endblock head_title %}</title>
         <link rel="stylesheet" type="text/css" href="{% static 'css/styles.css' %}">
     </head>
     <body class="body">
         <div class="content">
             <nav class="main-menu">
+                <div class="logo-panel"><img src="/static/images/dorinvest-logo.png" alt=""></div>
                 <ul>
                     <li><a href="/manage"><i class="fa fa-home fa-2x"></i><span class="nav-text">Панель управления</span></a></li>
                     <li><a href="/manage/expositions"><i class="fa fa-calendar fa-2x"></i><span class="nav-text">Выставки</span></a></li>

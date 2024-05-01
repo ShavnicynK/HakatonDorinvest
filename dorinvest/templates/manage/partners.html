@@ -25,25 +25,25 @@
                         Логотип:
                     </div>
                     <div class="modal-inner-input">
-                        <input type="file" id="image" name="image" accept="image/png, image/jpeg" />
+                        <input type="file" class="inputbox" id="image" name="image" accept="image/png, image/jpeg" />
                     </div>
                     <br>
                     <div class="modal-inner-input">
-                        <button class="btn" type="submit">Сохранить</button>
+                        <button class="buttonbox" type="submit">Сохранить</button>
                     </div>
                 </fieldset>
             </div>
         </form>
     </div>
     {% if data %}
-        <div style="margin: 0 2%">
+        <div style="margin: 0 2%" class="partners-block">
             <h2>Партнеры</h2>
             {% for partner in data %}
                 <div class="partner-block">
                     <div class="partner-block-item"><img align="left" height="80px" src="/{{ partner.image }}" alt="{{ partner.name }}"></div>
                     <div class="partner-block-item">{{ partner.name }}</div>
                     <div class="partner-block-item"><a href="{{ partner.link }}">{{ partner.link }}</a></div>
-                    <div class="partner-block-item"><a href="/manage/partners/delete/{{ partner.id }}">Удалить</a></div>
+                    <div class="partner-block-item"><a class="button-delete" href="/manage/partners/delete/{{ partner.id }}">Удалить</a></div>
                 </div>
             {% endfor %}
         </div>

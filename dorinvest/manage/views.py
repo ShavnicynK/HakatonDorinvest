@@ -1,5 +1,7 @@
-from django.shortcuts import render
-from app.models import BaseSettings, Partner, Question, Pet, ImagePet, Exposition, ExpositionPartner, ExpositionPet
+from datetime import date
+from django.db.models import Q
+from django.shortcuts import render, redirect
+from app.models import *
 from django.db import IntegrityError
 from django.contrib.auth.decorators import login_required
 from django.views.decorators.csrf import csrf_exempt
@@ -7,8 +9,27 @@ from django.views.decorators.csrf import csrf_exempt
 
 @login_required
 def manage_page(request):
+    try:
+        calls = CallForm.objects.filter(status='new')
+    except IntegrityError:
+        calls = None
 
-    return render(request, "manage/manage_page.html", {})
+    try:
+        feedback = FeedBackForm.objects.filter(status='new')
+    except IntegrityError:
+        feedback = None
+
+    try:
+        pickuppet = PickUpPetForm.objects.filter(status='new')
+    except IntegrityError:
+        pickuppet = None
+    else:
+        for row in pickuppet:
+            row.petname = Pet.objects.get(id=row.pet).name
+
+    return render(request, "manage/manage_page.html", {'pickuppet': pickuppet,
+                                                       'feedback': feedback,
+                                                       'calls': calls})
 
 
 @login_required
@@ -29,9 +50,9 @@ def settings_page(request):
         statistic_pets_home = request.POST['statistic_pets_home']
         how_get_text = request.POST['how_get_text']
         contract_file = request.FILES['contract_file']
-        meta_title = request.FILES['meta_title']
-        meta_description = request.FILES['meta_description']
-        meta_keywords = request.FILES['meta_keywords']
+        meta_title = request.POST['meta_title']
+        meta_description = request.POST['meta_description']
+        meta_keywords = request.POST['meta_keywords']
 
         try:
             BaseSettings.objects.update_or_create(id=setting_id, defaults={
@@ -184,6 +205,8 @@ def pets_page(request):
                 except IntegrityError:
                     pass
 
+        return redirect('/manage/pets')
+
     data = Pet.objects.all()
     for row in data:
         if row.images.first():
@@ -215,17 +238,33 @@ def pet_drop(request, pk):
 
 @login_required
 @csrf_exempt
-def exposition_add_page(request):
+def exposition_edit_page(request, pk):
     if request.method == "POST":
         place = request.POST['place']
         date_start = request.POST['date_start']
         date_finish = request.POST['date_finish']
+        top_image = request.POST['top_image']
 
         try:
-            exposition = Exposition.objects.create(place=place, date_start=date_start, date_finish=date_finish, top_image='')
+            if pk > 0:
+                Exposition.objects.filter(id=pk).update(place=place,
+                                                        date_start=date_start,
+                                                        date_finish=date_finish,
+                                                        top_image=top_image)
+                exposition = Exposition.objects.get(id=pk)
+            else:
+                Exposition.objects.filter(status='completed').update(status='past')
+                exposition = Exposition.objects.create(place=place,
+                                                       date_start=date_start,
+                                                       date_finish=date_finish,
+                                                       top_image=top_image)
+
         except IntegrityError:
             pass
         else:
+            if pk > 0:
+                ExpositionPartner.objects.filter(exposition=exposition).delete()
+
             for partner in request.POST.getlist('partners'):
                 partner_obj = Partner.objects.get(id=partner)
                 try:
@@ -233,12 +272,17 @@ def exposition_add_page(request):
                 except IntegrityError:
                     pass
 
+            if pk > 0:
+                ExpositionPet.objects.filter(exposition=exposition).delete()
+
             for pet in request.POST.getlist('pets'):
                 pet_obj = Pet.objects.get(id=pet)
                 try:
                     ExpositionPet.objects.create(exposition=exposition, pet=pet_obj)
                 except IntegrityError:
                     pass
+
+            return redirect('/manage/expositions')
 
     data = dict()
     pets = Pet.objects.all()
@@ -251,4 +295,175 @@ def exposition_add_page(request):
     data['partners'] = Partner.objects.all()
     data['pets'] = pets
 
-    return render(request, 'manage/exposition_add.html', {'data': data})
+    if pk > 0:
+        data['exposition'] = Exposition.objects.get(id=pk)
+    else:
+        exposition_date =  {}
+        exposition_date['date_start'] = date.today()
+        exposition_date['date_finish'] = date.today()
+        data['exposition'] = exposition_date
+
+    return render(request, 'manage/exposition_edit.html', {'data': data})
+
+
+@login_required
+@csrf_exempt
+def expositions_page(request):
+    data = Exposition.objects.all().order_by('-id')
+
+    if Exposition.objects.filter(status='active').exists():
+        active = 1
+    else:
+        active = 0
+
+    for row in data:
+        row.cats = 0
+        row.dogs = 0
+
+        for pet in row.pets.all():
+            if pet.type == 'cat':
+                row.cats += 1
+            else:
+                row.dogs += 1
+
+    return render(request, 'manage/expositions.html', {'data': data, 'active': active})
+
+
+@login_required
+@csrf_exempt
+def exposition_close_page(request, pk):
+    if request.method == "POST":
+        description = request.POST['description']
+
+        try:
+            Exposition.objects.filter(id=pk).update(description=description, status='completed')
+            exposition = Exposition.objects.get(id=pk)
+        except IntegrityError:
+            pass
+        else:
+            for image in request.FILES.getlist('images'):
+                try:
+                    ImageExposition.objects.create(exposition=exposition, image=image)
+                except IntegrityError:
+                    pass
+
+        return redirect('/manage/expositions')
+
+    else:
+        return render(request, 'manage/exposition_close.html', {})
+
+
+@login_required
+@csrf_exempt
+def exposition_view_page(request, pk):
+    if request.method == "POST":
+        description = request.POST['description']
+
+        try:
+            Exposition.objects.filter(id=pk).update(description=description, status='past')
+            exposition = Exposition.objects.get(id=pk)
+        except IntegrityError:
+            pass
+        else:
+            for image in request.FILES.getlist('images'):
+                try:
+                    ImageExposition.objects.create(exposition=exposition, image=image)
+                except IntegrityError:
+                    pass
+
+    exposition = Exposition.objects.get(id=pk)
+
+    images = ImageExposition.objects.filter(exposition=exposition)
+
+    return render(request, 'manage/exposition_view.html', {'data': exposition, 'images': images})
+
+
+@login_required
+@csrf_exempt
+def exposition_image_drop(request, pk, ipk):
+    if ipk > 0:
+        try:
+            ImageExposition.objects.filter(id=ipk).delete()
+        except IntegrityError:
+            pass
+
+    return redirect(f'/manage/exposition_view/{pk}')
+
+
+@login_required
+@csrf_exempt
+def pet_edit_page(request, pk):
+    if request.method == "POST":
+        pk = request.POST['pk']
+        name = request.POST['name']
+        gender = request.POST['gender']
+        age = request.POST['age']
+        description = request.POST['description']
+        ptype = request.POST['type']
+
+        try:
+            Pet.objects.filter(id=pk).update(name=name, gender=gender, age=age, description=description, type=ptype)
+            pet = Pet.objects.get(id=pk)
+        except IntegrityError:
+            pass
+        else:
+            for image in request.FILES.getlist('images'):
+                try:
+                    ImagePet.objects.create(pet=pet, image=image)
+                except IntegrityError:
+                    pass
+
+    pet = Pet.objects.get(id=pk)
+
+    images = ImagePet.objects.filter(pet=pk)
+
+    return render(request, 'manage/pet_edit.html', {'data': pet, 'images': images})
+
+
+@login_required
+@csrf_exempt
+def pet_image_drop(request, pk, ipk):
+    if ipk > 0:
+        try:
+            ImagePet.objects.filter(id=ipk).delete()
+        except IntegrityError:
+            pass
+
+    return redirect(f'/manage/pets/edit/{pk}')
+
+
+@login_required
+@csrf_exempt
+def call_done(request, pk):
+    if pk > 0:
+        try:
+            CallForm.objects.filter(id=pk).update(status='done')
+        except IntegrityError:
+            pass
+
+    return redirect('/manage')
+
+
+@login_required
+@csrf_exempt
+def feedback_done(request, pk):
+    if pk > 0:
+        try:
+            FeedBackForm.objects.filter(id=pk).update(status='done')
+        except IntegrityError:
+            pass
+
+    return redirect('/manage')
+
+
+@login_required
+@csrf_exempt
+def pickuppet_done(request, pk):
+    if pk > 0:
+        try:
+            PickUpPetForm.objects.filter(id=pk).update(status='done')
+        except IntegrityError:
+            pass
+
+    return redirect('/manage')
+

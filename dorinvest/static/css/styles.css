@@ -1,11 +1,18 @@
-@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');
 @import url(//netdna.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.css);
-
+input, textarea {outline:none;}
 body {
-	  font-family: 'Montserrat';
-	  background-color: #FFFFFF;
+	  font-family: 'Roboto';
+	  background-color: #F6F3EF;
  	  margin: 0;
     padding: 0;
+    font-size: 18px;
+}
+.logo-panel {
+    margin: 50px 12px;
+}
+.logo-panel img {
+   width:160px;
 }
 .content {
 	  padding-left: 50px;
@@ -27,6 +34,9 @@ body {
 	  vertical-align: middle;
 	  font-size:20px;
 }
+.fa-ex {
+	  font-size:32px !important;
+}
 .fa-st {
 	  font-size:28px !important;
 }
@@ -35,7 +45,7 @@ body {
 	  overflow:visible;
 }
 .main-menu {
-	  background:#F6F9F9;
+	  background:#FFE5D3;
 	  box-shadow: 8px 0px 8px rgba(0, 0, 0, 0.04);
 	  position:fixed;
 	  top:0;
@@ -60,7 +70,7 @@ body {
 	  display:table;
 	  border-collapse:collapse;
 	  border-spacing:0;
-	  color:#555D64;
+	  color:#000000;
 	  font-size: 16px;
 	  text-decoration:none;
 	  transition:all .1s linear;
@@ -105,16 +115,43 @@ nav ul,nav li {
 }
 .main-menu li:hover>a,nav.main-menu li.active>a,.dropdown-menu>li>a:hover,.dropdown-menu>li>a:focus,.dropdown-menu>.active>a,.dropdown-menu>.active>a:hover,.dropdown-menu>.active>a:focus,.no-touch .dashboard-page nav.dashboard-menu ul li:hover a,.dashboard-page nav.dashboard-menu ul li.active a {
 	  color:#fff;
-	  background-color:grey;
+	  background-color:#207B44;
+}
+.inputbox {
+    padding: 10px 20px;
+    border-radius: 12px;
+    border: solid 1px #333333;
+    margin-bottom: 10px;
+    font-size:18px;
+}
+.inputbox:focus {
+    border: solid 1px #79BD9A;
+}
+.buttonbox {
+    padding: 10px 20px;
+    border-radius: 24px;
+    border: none;
+    margin-bottom: 10px;
+    font-size:18px;
+    color: #000000;
+    background-color: #FB8433;
+    min-width: 150px;
+    cursor: pointer;
+}
+.buttonbox:hover {
+    color: #FFFFFF;
+}
+.logo {
+    margin-bottom: 50px;
 }
 .page-header {
-    background: #F0F0F0;
+    background: #207B44;
     padding: 30px;
     font-style: normal;
     font-weight: normal;
     font-size: 32px;
     line-height: 32px;
-    color: #555D64;
+    color: #FFFFFF;
     margin: 0;
     position: fixed;
     top: 0;
@@ -130,9 +167,10 @@ nav ul,nav li {
     position: relative;
     display: table-cell;
     vertical-align: middle;
+    left: 25px;
 }
 #clock {
-    color: #555D64;
+    color: #FFFFFF;
     font-size: 24px !important;
     text-align: right;
     position: absolute;
@@ -144,18 +182,7 @@ nav ul,nav li {
     margin: 0 0 10px;
 }
 
-.btn {
-    border-radius: 5px !important;
-    font-size: 16px !important;
-    border: none !important;
-    cursor: pointer !important;
-    padding: 10px !important;
-    width: -moz-fit-content !important;
-    width: fit-content !important;
-    text-decoration: none !important;
-    background: #F0F0F0 !important;
-    color: #000000 !important;
-}
+
 .auth {
     max-width: 332px;
     margin-left: auto;
@@ -194,15 +221,15 @@ nav ul,nav li {
 	width: 100%;
 	border: none;
 	margin: 20px 0;
-	font-family: 'Montserrat', sans-serif;
-    color: #555D64;
+	font-family: 'Roboto', sans-serif;
+    color: #000000;
 }
 .crm-table thead th {
 	font-weight: bold;
 	text-align: left;
 	border: none;
 	padding: 10px 15px;
-	background: #d8d8d8;
+	background: #79BD9A;
 	font-size: 16px;
 }
 .crm-table thead input {
@@ -218,21 +245,22 @@ nav ul,nav li {
 .crm-table thead tr th:last-child {
 	
 }
-.crm-table tbody td {
+.crm-table tbody td, .crm-table thead th {
 	text-align: left;
-	border: none;
+	border: solid 1px #B9B9B9;
 	padding: 10px 15px;
-	font-size: 14px;
-	vertical-align: top;
+	font-size: 16px;
+	vertical-align: middle;
 }
 .crm-table tbody tr:nth-child(even){
 	background: #f3f3f3;
+
 }
-.crm-table tbody tr td:first-child {
-	border-radius: 8px 0 0 8px;
+.crm-table thead tr th:first-child {
+	border-radius: 8px 0 0 0;
 }
-.crm-table tbody tr td:last-child {
-	border-radius: 0 8px 8px 0;
+.crm-table thead tr th:last-child {
+	border-radius: 0 8px 0 0;
 }
 .fs-crm {
 	width: 100%;
@@ -242,9 +270,38 @@ nav ul,nav li {
 	padding: 0 20px 20px 20px;
 	box-sizing: border-box;
 	margin: 2%;
-	border: solid 3px #F0F0F0;
+	border: solid 2px #79BD9A;
+	border-radius: 20px;
 }
-
+.exposition-edit .fs-crm {
+	height: 380px;
+}
+.fs-crm-mp-s {
+	width: 100%;
+	max-width: 725px;
+	display: block;
+	float: left;
+	padding: 0 20px 20px 20px;
+	box-sizing: border-box;
+	margin: 2%;
+	border: solid 2px #79BD9A;
+	border-radius: 20px;
+	max-height: 450px;
+    overflow: auto;
+}
+.fs-crm-mp {
+	width: 95%;
+	display: block;
+	float: left;
+	padding: 0 20px 20px 20px;
+	box-sizing: border-box;
+	margin: 2%;
+	border: solid 2px #79BD9A;
+	border-radius: 20px;
+	max-height: 450px;
+    overflow: auto;
+    max-width: 1520px;
+}
 .fs-crm-full {
 	width: 95%;
 	display: block;
@@ -252,29 +309,32 @@ nav ul,nav li {
 	padding: 0 20px 20px 20px;
 	box-sizing: border-box;
 	margin: 2%;
-	border: solid 3px #F0F0F0;
+	border: solid 2px #79BD9A;
+	border-radius: 20px;
 	max-height: 630px;
-  overflow: auto;
+    overflow: auto;
+    max-width: 1520px;
 }
 
 fieldset legend {
-	font-family: 'Montserrat';
-	background: #F0F0F0;
+	font-family: 'Roboto';
+	background: #79BD9A;
 	padding: 10px;
 	font-style: normal;
 	font-weight: normal;
 	font-size: 20px;
 	line-height: 20px;
-	color: #555D64;
+	color: #000000;
 	margin: 0 0 20px 0;
 	position: relative;
 	float: initial;
+	border-radius: 10px;
 }
 .modal-inner-label {
   font-weight: bold;
   text-align: left;
   border: none;
-  padding: 10px 15px;
+  padding: 10px 0;
   font-size: 16px;
   overflow: hidden;
 }
@@ -282,26 +342,77 @@ fieldset legend {
   text-align: left;
 }
 .modal-inner-input input, select, textarea {
-  text-align: left;
-  padding: 5px;
-  font-size: 15px;
   width: 100%;
   box-sizing: border-box;
 }
-
+.partners-block img {
+    border: solid 1px grey;
+    padding: 5px;
+    border-radius: 5px;
+}
+.partners-block a, .pet-block a {
+    color: #000000;
+    font-size: 16px;
+}
 .partner-block, .question-block {
 
     padding: 10px;
     box-sizing: border-box;
     width: 100%;
     margin: 10px;
-    border-bottom: solid 2px grey;
+    border-bottom: solid 1px grey;
+}
+a.button-delete {
+    padding: 10px 20px;
+    border-radius: 24px;
+    border: none;
+    margin-bottom: 10px;
+    font-size:18px;
+    color: #000000;
+    min-width: 150px;
+    border: solid 2px #000000;
+    cursor: pointer;
+    text-decoration:none;
+}
+a.button-delete:hover {
+    color: red;
+    border: solid 2px red;
+}
+a.button-add {
+    padding: 10px 20px;
+    border-radius: 24px;
+    border: none;
+    margin-bottom: 10px;
+    font-size:18px;
+    color: #000000;
+    min-width: 150px;
+    border: solid 2px #000000;
+    cursor: pointer;
+    text-decoration:none;
+}
+a.button-add:hover {
+    color: #207B44;
+    border: solid 2px #207B44;
+}
+a.button-icon {
+    border: none;
+    font-size:18px;
+    color: #000000;
+    cursor: pointer;
+    text-decoration:none;
+}
+a.button-icon:hover {
+    color: #207B44;
+}
+.page-header .fa {
+    font-size: 40px;
 }
 .partner-block-item {
     display: inline-block;
     margin: 0 15px;
     vertical-align: middle;
-    width: 20%;
+    width: 22%;
+    text-align:center
 }
 .partner-block img {
     margin-right: 30px
@@ -316,9 +427,11 @@ fieldset legend {
     float: left;
     margin-right: 20px;
     margin-bottom: 50px;
+    position: relative;
 }
 .pet-block-item {
     width: 100%;
+    margin: 7px auto;
 }
 
 .pet-block-item.image {
@@ -332,12 +445,14 @@ fieldset legend {
 	margin-bottom: 15px;
 	cursor: pointer;
 	height: 200px;
-
+    border-radius: 10px;
   }
-
 .exposition-add ul {
   list-style-type: none;
+  padding-left: 0;
 }
+
+
 
 .exposition-add li {
   display: inline-block;
@@ -357,6 +472,7 @@ fieldset legend {
   display: block;
   position: relative;
   margin: 10px;
+  border-radius: 10px;
   cursor: pointer;
   border-color: #ddd;
 }
@@ -367,14 +483,14 @@ fieldset legend {
   content: " ";
   display: block;
   border-radius: 50%;
-  border: 1px solid grey;
+  border: 1px solid #207B44;
   position: absolute;
   top: -5px;
   left: -5px;
-  width: 25px;
-  height: 25px;
+  width: 40px;
+  height: 40px;
   text-align: center;
-  line-height: 22px;
+  line-height: 36px;
   transition-duration: 0.4s;
   transform: scale(0);
 }
@@ -392,12 +508,20 @@ fieldset legend {
 
 .exposition-add :checked + label:before {
   content: "✓";
-  background-color: grey;
+  font-size: 25px;
+  font-weight: bold;
+  background-color: #207B44;
   transform: scale(1);
+  z-index: 2;
 }
 
 .exposition-add :checked + label img {
   transform: scale(0.9);
   /* box-shadow: 0 0 5px #333; */
   z-index: -1;
+}
+
+label.pet-item {
+    border: none;
+    padding: 0;
 }

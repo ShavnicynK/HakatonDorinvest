@@ -1,9 +1,76 @@
 {% extends 'manage/base_manage.html' %}
 {% load static %}
+{% block page-ico %}fa-home{% endblock page-ico %}
 {% block page-title %}Панель управления{% endblock page-title %}
 {% block content %}
 
+<fieldset class="fs-crm-mp-s">
+    <legend>Заявки на запрос звонка</legend>
+    {% if calls %}
+    <table class="crm-table" cellpadding="0" cellspacing="0">
+        <tbody>
+            {% for item in calls %}
+            <tr>
+                <td>{{ item.name }}</td>
+                <td>{{ item.phone }}</td>
+                <td><a href="/manage/calldone/{{ item.id }}" style="float: right;" class="button-icon"><i class="fa fa-ex fa-check-square-o" aria-hidden="true"></i>
+</a></td>
+            </tr>
 
+        {% endfor %}
+            </tbody>
+            </table>
+    {% else %}
+    Нет необработанных запросов на звонок
+    {% endif %}
+</fieldset>
+
+<fieldset class="fs-crm-mp-s">
+    <legend>Желающие забрать питомца</legend>
+    {% if pickuppet %}
+    <table class="crm-table" cellpadding="0" cellspacing="0">
+        <tbody>
+            {% for item in pickuppet %}
+            <tr>
+                <td>{{ item.name }}</td>
+                <td>{{ item.email }}</td>
+                <td>Животное - <a href="/manage/pets/edit/{{ item.pet }}" target="_blank" class="button-icon">{{ item.petname }}</a></td>
+                <td><a href="/manage/pickuppetdone/{{ item.id }}" style="float: right;" class="button-icon"><i class="fa fa-ex fa-check-square-o" aria-hidden="true"></i>
+</a></td>
+            </tr>
+
+        {% endfor %}
+            </tbody>
+            </table>
+    {% else %}
+    Нет необработанных желаний забрать питомца
+    {% endif %}
+</fieldset>
+
+<fieldset class="fs-crm-mp">
+    <legend>Заявки из формы обратной связи</legend>
+    {% if feedback %}
+    <table class="crm-table" cellpadding="0" cellspacing="0">
+
+            <tbody>
+            {% for item in feedback %}
+            <tr>
+                <td>{{ item.name }}</td>
+                <td>{{ item.phone }}</td>
+                <td>{{ item.email }}</td>
+                <td>{{ item.message }}
+                </td>
+                <td><a href="/manage/feedbackdone/{{ item.id }}" style="float: right;" class="button-icon"><i class="fa fa-ex fa-check-square-o" aria-hidden="true"></i>
+</a></td>
+            </tr>
+
+        {% endfor %}
+            </tbody>
+            </table>
+    {% else %}
+    Нет необработанных заявок
+    {% endif %}
+</fieldset>
 
 
 

@@ -9,25 +9,26 @@
         <form class="" method="POST" action="{% url 'settings' %}"  enctype="multipart/form-data">
             {% csrf_token %}
             <div style="overflow:hidden">
+                <div style="overflow:hidden">
                 <fieldset class="fs-crm">
                     <legend>Метатеги</legend>
                     <div class="modal-inner-label">
                         Title:
                     </div>
                     <div class="modal-inner-input">
-                        <textarea class="text_area" name="meta_title" id="meta_title" style="width: 100%;height:50px;">{{ data.meta_title }}</textarea>
+                        <textarea class="inputbox" name="meta_title" id="meta_title" style="width: 100%;height:50px;">{{ data.meta_title }}</textarea>
                     </div>
                     <div class="modal-inner-label">
                         Description:
                     </div>
                     <div class="modal-inner-input">
-                        <textarea class="text_area" name="meta_description" id="meta_description" style="width: 100%;height:50px;">{{ data.meta_description }}</textarea>
+                        <textarea class="inputbox" name="meta_description" id="meta_description" style="width: 100%;height:50px;">{{ data.meta_description }}</textarea>
                     </div>
                     <div class="modal-inner-label">
                         Keywords:
                     </div>
                     <div class="modal-inner-input">
-                        <textarea class="text_area" name="meta_keywords" id="meta_keywords" style="width: 100%;height:50px;">{{ data.meta_keywords }}</textarea>
+                        <textarea class="inputbox" name="meta_keywords" id="meta_keywords" style="width: 100%;height:50px;">{{ data.meta_keywords }}</textarea>
                     </div>
                 </fieldset>
                 <fieldset class="fs-crm">
@@ -36,7 +37,7 @@
                         Текст:
                     </div>
                     <div class="modal-inner-input">
-                        <textarea class="text_area" name="full_description" id="full_description" style="width: 100%;height:200px;">{{ data.full_description }}</textarea>
+                        <textarea class="inputbox" name="full_description" id="full_description" style="width: 100%;height:200px;">{{ data.full_description }}</textarea>
                     </div>
                 </fieldset>
                 <fieldset class="fs-crm">
@@ -45,7 +46,7 @@
                         Текст:
                     </div>
                     <div class="modal-inner-input">
-                        <textarea class="text_area" name="how_get_text" id="how_get_text" style="width: 100%;height:150px;">{{ data.how_get_text }}</textarea>
+                        <textarea class="inputbox" name="how_get_text" id="how_get_text" style="width: 100%;height:150px;">{{ data.how_get_text }}</textarea>
                     </div>
                     <div class="modal-inner-label">
                         Файл договора:
@@ -57,6 +58,8 @@
                         <input type="file" id="contract_file" name="contract_file" accept=".doc, .docx, .pdf" />
                     </div>
                 </fieldset>
+                </div>
+                <div style="overflow:hidden">
                 <fieldset class="fs-crm">
                     <legend>Контакты</legend>
                     <div class="modal-inner-label">
@@ -81,7 +84,7 @@
                         Адрес в контактах:
                     </div>
                     <div class="modal-inner-input">
-                        <textarea class="text_area" name="contact_address" id="contact_address" style="width: 100%;height:100px;">{{ data.contact_address }}</textarea>
+                        <textarea class="inputbox" name="contact_address" id="contact_address" style="width: 100%;height:100px;">{{ data.contact_address }}</textarea>
                     </div>
                 </fieldset>
                 <fieldset class="fs-crm">
@@ -126,10 +129,11 @@
                         <input type="text" id="statistic_pets_home" name="statistic_pets_home" value="{{ data.statistic_pets_home }}" maxlength="255" class="inputbox">
                     </div>
                 </fieldset>
+                </div>
             </div>
             <input type="hidden" name="setting_id" value="{{ data.setting_id }}">
             <div style="margin: 0 2%">
-                <button class="btn" type="submit">Сохранить</button>
+                <button class="buttonbox" type="submit">Сохранить</button>
             </div>
 
         </form>
